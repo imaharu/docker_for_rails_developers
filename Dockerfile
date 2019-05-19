@@ -17,8 +17,12 @@ RUN apt-get update -yqq \
 
 COPY Gemfile* /usr/src/app/
 WORKDIR /usr/src/app
+
+ENV BUNDLE_PATH /gems
+
 RUN bundle install
 
 COPY . /usr/src/app
-
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 CMD ["bin/rails", "s", "-b", "0.0.0.0"]
